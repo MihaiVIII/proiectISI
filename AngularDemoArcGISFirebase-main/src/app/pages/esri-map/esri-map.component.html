@@ -1,0 +1,71 @@
+<!-- Here's the DIV that we inject the map into -->
+
+<div fxLayout="row">
+    <div fxFlex="20%" fxLayout="column">
+        <mat-list>
+            <mat-list-item>
+                <span class="label">Menu</span>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <label>PointMarker Colour:</label>
+                <input type="color" id="favcolor" name="favcolor" value="#ff0000"><br>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <button mat-button mat-button color="primary" class="full-w" (click)="openForm()">Log In</button>
+                <!-- The form -->
+                <div class="form-popup" id="myForm">
+                    <form action="/action_page.php" class="form-container">
+                    <h1>Login</h1>
+                
+                    <label for="email"><b>Email</b></label>
+                    <input id ="email" type="text" placeholder="Enter Email" name="email" required>
+                
+                    <label for="psw"><b>Password</b></label>
+                    <input id="psw" type="password" placeholder="Enter Password" name="psw" required>
+                
+                    <button type="button" class="btn" (click) = "login()">Login</button>
+                    <button type="button" class="btn" (click) = "signup()">Signup</button>
+                    <button type="button" class="btn cancel" (click)="closeForm()">Close</button>
+        </form>
+  </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <button mat-button mat-button color="primary" class="full-w" (click)="swPointmode()">Add PointMarker</button>
+                <button mat-button mat-button color="primary" class="full-w" (click)="clearPoints()">Clear points</button>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <button mat-button mat-button color="primary" class="full-w" (click)="swRoutemode()">Add route</button>
+                <button mat-button mat-button color="primary" class="full-w" (click)="clearRoute()">Clear Route</button>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <button mat-button mat-button color="primary" class="full-w" (click)="switchMapView()">Switch map view</button>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <button mat-button mat-button color="primary" class="full-w" (click)="sendFeedback()">Send Feedback</button>
+            </mat-list-item>
+            <mat-list-item>
+                <!-- The form -->
+                <div class="form-popup" id="myForm2">
+                    <form action="/action_page.php" class="form-container">
+                    <h1 id="headerfeedback">Formular feedback</h1>
+                
+                    <label for="feed"><b>Send feedback</b></label>
+                    <textarea id="feed" name="psw" rows = "4" cols = "30" required >
+                    </textarea>
+                    <button type="button" class="btn" (click) = "sendFeedbackItem()">Send feedback</button>
+                    <button type="button" class="btn cancel" (click)="closeForm2()">Close</button>
+                    </form>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </div>
+    <div fxFlex="80%">
+        <div #mapViewNode></div>
+    </div>
+</div>
