@@ -230,14 +230,14 @@ export class EsriMapComponent implements OnInit, OnDestroy {
     this.listFeatureLayer1.push(ProtectedAreas);
     this.listFeatureLayer1.push(0.3);
 
-    var ptr = this;
+    
     const popupSimple = {
       "title": "Monument istoric",
-      "content": "<b>Nume:</b>{name}"
+      "content": "<b>Nume:</b>{title}"
     }
 
     const turism_layer = new FeatureLayer({
-      url: "https://services7.arcgis.com/v0CEu87DMHNQuNtr/arcgis/rest/services/Turism/FeatureServer/0",
+      url: "https://services8.arcgis.com/BBQ8y8wlr7sbDPZa/arcgis/rest/services/tourist_attractions_in_romania/FeatureServer/0",
       popupTemplate: popupSimple,
       outFields:["*"]
     });
@@ -245,6 +245,7 @@ export class EsriMapComponent implements OnInit, OnDestroy {
     this.listFeatureLayer1.push(turism_layer);
     this.listFeatureLayer1.push(1);
 
+    /*
     const turism_layer2 = new FeatureLayer({
       url: "https://services7.arcgis.com/v0CEu87DMHNQuNtr/arcgis/rest/services/Turism/FeatureServer/1",
       popupTemplate: popupSimple,
@@ -261,7 +262,7 @@ export class EsriMapComponent implements OnInit, OnDestroy {
     });
     this.map.add(turism_layer3);
     this.listFeatureLayer1.push(turism_layer3);
-    this.listFeatureLayer1.push(1);
+    this.listFeatureLayer1.push(1);*/
 
     const popupANatural = {
       "title": "Atractie naturala",
@@ -326,21 +327,12 @@ export class EsriMapComponent implements OnInit, OnDestroy {
     this.listFeatureLayer2.push(1)
 
     const hoteluri = new FeatureLayer({
-      url: "https://services7.arcgis.com/v0CEu87DMHNQuNtr/arcgis/rest/services/Unitati_cazare/FeatureServer/0",
+      url: "https://services-eu1.arcgis.com/2kgTFE8LsZ1o2R2l/arcgis/rest/services/Harta_Romania_Hoteluri_WFL1/FeatureServer/3",
       renderer: Renderer2 as esri.RendererProperties
     });
     this.map.add(hoteluri);    
     hoteluri.opacity = 0;
     this.listFeatureLayer2.push(hoteluri);
-    this.listFeatureLayer2.push(1)
-
-    const cazari = new FeatureLayer({
-      url: "https://services7.arcgis.com/v0CEu87DMHNQuNtr/arcgis/rest/services/Unitati_cazare/FeatureServer/1",
-      renderer: Renderer2 as esri.RendererProperties
-    });
-    this.map.add(cazari);    
-    cazari.opacity = 0;
-    this.listFeatureLayer2.push(cazari);
     this.listFeatureLayer2.push(1)
 
     const spitale = new FeatureLayer({
@@ -671,7 +663,7 @@ export class EsriMapComponent implements OnInit, OnDestroy {
 
       labelPlacement: "above-center",
       labelExpressionInfo: {
-        expression: "$feature.NAME"
+        expression: "$feature.name"
       },
       minScale:80000,
       maxScale:500
@@ -730,17 +722,17 @@ export class EsriMapComponent implements OnInit, OnDestroy {
         }
       }
     }
-    if (aux.layer.title == "Turism points")
+    if (aux.layer.title == "Tourist attractions in romania")
     {
       if ('graphic' in aux)
       {
         var aux2 = aux.graphic.attributes;
         console.log(aux2);
-        if ('F_id' in aux2) 
+        if ('dataId' in aux2) 
         {
-          console.log(aux2.F_id);
-          ptr.feedbackuid =  aux2.F_id;
-          ptr.openForm2(aux2.name);
+          console.log(aux2.dataId);
+          ptr.feedbackuid =  aux2.dataId;
+          ptr.openForm2(aux2.title);
         }
       }
     }
@@ -802,16 +794,16 @@ export class EsriMapComponent implements OnInit, OnDestroy {
         }
       }
     }
-    if (aux.layer.title == "Turism points")
+    if (aux.layer.title == "Tourist attractions in romania")
     {
       if ('graphic' in aux)
       {
         var aux2 = aux.graphic.attributes;
         console.log(aux2);
-        if ('F_id' in aux2) 
+        if ('dataId' in aux2) 
         {
-          console.log(aux2.F_id);
-          ptr.fbs.getFeedback(aux2.F_id).subscribe((items: IFeedback[]) => {
+          console.log(aux2.dataId);
+          ptr.fbs.getFeedback(aux2.dataId).subscribe((items: IFeedback[]) => {
             if(items.length > 0)
             {
               console.log("got new items from list: ", items);
@@ -822,7 +814,7 @@ export class EsriMapComponent implements OnInit, OnDestroy {
               directions.style.padding = "15px 15px 15px 15px";
               directions.style.width = "240px";
               const aux = document.createElement("label");
-              aux.innerHTML = "Feedback " + aux2.name;
+              aux.innerHTML = "Feedback " + aux2.title;
               directions.appendChild(aux);  
               items.forEach((item:IFeedback) => {
                 const direction = document.createElement("li");
